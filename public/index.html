@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#412234">
+    <title>UseBy | Smart Pantry</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <a href="/" class="logo">UseBy<span>.</span></a>
+        <div class="nav-right">
+            <span class="nav-dot"></span>
+            <span>Less waste, fresher living.</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="welcome">
+            <div>
+                <p class="eyebrow">YOUR SMART PANTRY</p>
+                <h1>Make every item count.</h1>
+                <p class="welcome-text">A little planning goes a long way. Keep track of your food and make the most of every item.</p>
+            </div>
+            <div class="welcome-art" aria-hidden="true">
+                <span class="art-circle circle-one"></span>
+                <span class="art-circle circle-two"></span>
+                <span class="art-leaf">✳</span>
+            </div>
+        </section>
+
+        <section class="summary" aria-label="Pantry summary">
+            <article class="summary-card">
+                <div class="summary-icon icon-total">▦</div>
+                <p>Total items</p>
+                <h2 id="totalItems">0</h2>
+                <span class="summary-note">In your pantry</span>
+            </article>
+            <article class="summary-card">
+                <div class="summary-icon icon-soon">◷</div>
+                <p>Expiring soon</p>
+                <h2 id="expiringItems">0</h2>
+                <span class="summary-note">Within 3 days</span>
+            </article>
+            <article class="summary-card">
+                <div class="summary-icon icon-expired">!</div>
+                <p>Expired items</p>
+                <h2 id="expiredItems">0</h2>
+                <span class="summary-note">Need your attention</span>
+            </article>
+        </section>
+
+        <section class="panel form-section" id="addItemSection">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">PANTRY DETAILS</p>
+                    <h2 id="formTitle">Add a food item</h2>
+                    <p class="section-description">Enter the details below to keep your pantry up to date.</p>
+                </div>
+                <span class="heading-icon" aria-hidden="true">＋</span>
+            </div>
+
+            <form id="foodForm" novalidate>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Food item name <span>*</span></label>
+                        <input type="text" id="name" name="name" placeholder="e.g. Fresh milk" maxlength="80" autocomplete="off" required>
+                        <small class="field-error" id="nameError"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity">Quantity <span>*</span></label>
+                        <input type="number" id="quantity" name="quantity" min="0.01" max="1000000" step="any" placeholder="e.g. 2" required>
+                        <small class="field-error" id="quantityError"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="purchaseDate">Purchase date <span>*</span></label>
+                        <input type="date" id="purchaseDate" name="purchaseDate" required>
+                        <small class="field-error" id="purchaseDateError"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expiryDate">Expiry date <span>*</span></label>
+                        <input type="date" id="expiryDate" name="expiryDate" required>
+                        <small class="field-error" id="expiryDateError"></small>
+                    </div>
+                </div>
+
+                <div id="formMessage" class="form-message" role="alert" aria-live="polite"></div>
+
+                <div class="form-actions">
+                    <button type="submit" class="primary-btn" id="submitBtn">
+                        <span id="submitBtnText">Add to my pantry</span>
+                        <span aria-hidden="true">→</span>
+                    </button>
+                    <button type="button" class="secondary-btn hidden" id="cancelEditBtn">Cancel edit</button>
+                </div>
+                <p class="required-note"><span>*</span> Required fields</p>
+            </form>
+        </section>
+
+        <section class="panel use-first-section">
+            <div class="section-heading compact-heading">
+                <div>
+                    <p class="eyebrow">PRIORITY LIST</p>
+                    <h2>Use first</h2>
+                    <p class="section-description">Items closest to expiry appear here first.</p>
+                </div>
+                <span class="priority-icon" aria-hidden="true">♡</span>
+            </div>
+            <div id="useFirstList" class="use-first-list">
+                <p class="inline-empty">Your pantry is looking good. No urgent items right now.</p>
+            </div>
+        </section>
+
+        <section class="panel items-section">
+            <div class="section-heading collection-heading">
+                <div>
+                    <p class="eyebrow">YOUR COLLECTION</p>
+                    <h2>My pantry</h2>
+                    <p class="section-description">Manage your food items in one place.</p>
+                </div>
+                <span id="itemCount" class="item-count">0 items</span>
+            </div>
+
+            <div class="pantry-tools">
+                <div class="search-box">
+                    <span aria-hidden="true">⌕</span>
+                    <input type="search" id="searchInput" placeholder="Search food items..." aria-label="Search food items">
+                </div>
+                <div class="filter-bar" role="group" aria-label="Filter food items">
+                    <button class="filter-btn active" data-filter="all" type="button">All items</button>
+                    <button class="filter-btn" data-filter="fresh" type="button">Fresh</button>
+                    <button class="filter-btn" data-filter="soon" type="button">Expiring soon</button>
+                    <button class="filter-btn" data-filter="expired" type="button">Expired</button>
+                    <button class="filter-btn" data-filter="consumed" type="button">Consumed</button>
+                </div>
+            </div>
+
+            <div id="foodList" class="food-list">
+                <div class="empty-state">
+                    <span class="empty-illustration" aria-hidden="true">♡</span>
+                    <h3>Your pantry is waiting!</h3>
+                    <p>Add your first food item to start tracking its freshness.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <a href="/" class="footer-logo">UseBy<span>.</span></a>
+            <p>A little care goes a long way.</p>
+        </footer>
+    </main>
+
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
